@@ -18,9 +18,7 @@
 *
 ***********************************************************/
 #include "hal_key.h"
-
 #include <math.h>
-
 
 extern keysTypedef_t keys;
 
@@ -239,19 +237,4 @@ void keyParaInit(keysTypedef_t *keys)
     {
         keys->keyTotolNum = KEY_MAX_NUMBER; 
     }
-    
-//    for(temI = 0; temI < keys->keyTotolNum; temI++) 
-//    {
-//        GPIO_InitTypeDef GPIO_InitStructure;
-//        RCC_APB2PeriphClockCmd(keys->singleKey[temI].keyRccPeriph, ENABLE);
-
-//        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-//        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
-
-//        GPIO_InitStructure.GPIO_Pin = keys->singleKey[temI].keyGpio;
-//        GPIO_Init(keys->singleKey[temI].keyPort, &GPIO_InitStructure);
-//    }
-    
-    //初始化周期为1MS定时器
-    //timerkeyInit();
 }
