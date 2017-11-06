@@ -85,6 +85,10 @@ extern "C" {
 #define ledValue_ADDITION                      0
 #define ledValue_MIN                           0
 #define ledValue_MAX                           255
+#define O2_RATIO                         1
+#define O2_ADDITION                      0
+#define O2_MIN                           0
+#define O2_MAX                           999
 	/**@} */
 
 	/** Writable data points Boolean and enumerated variables occupy byte size */
@@ -281,6 +285,7 @@ extern "C" {
 		bool valueled3;
 		bool valueled4;
 		uint32_t valueledValue;
+		uint32_t valueO2;
 	} dataPoint_t;
 
 
@@ -310,6 +315,7 @@ extern "C" {
 	typedef struct {
 		uint8_t wBitBuf[COUNT_W_BIT];
 		uint8_t valueledValue;
+		uint16_t valueO2;
 	} devStatus_t;
 
 

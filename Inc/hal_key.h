@@ -51,7 +51,6 @@ __packed typedef struct
     keyTypedef_t *singleKey; 
 }keysTypedef_t; 
 
-void keyGpioInit(void);
 void keyHandle(keysTypedef_t *keys);
 void keyParaInit(keysTypedef_t *keys);
 uint16_t getKey(keysTypedef_t *key);

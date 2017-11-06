@@ -39,11 +39,14 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usart.h"
-
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-
+int _write(int fd, char *pBuffer, int size)
+{
+	HAL_UART_Transmit(&huart1, pBuffer, size, 0xff);
+	return size;
+}
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;

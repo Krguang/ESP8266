@@ -16,8 +16,9 @@
 #include "ringBuffer.h"
 #include "gizwits_product.h"
 #include "dataPointTools.h"
+#include "usart.h"
 
-#define GIZWITS_LOG Uart_printf
+#define GIZWITS_LOG printf
 
 /** Protocol global variables **/
 gizwitsProtocol_t gizwitsProtocol;
@@ -193,6 +194,15 @@ static int8_t ICACHE_FLASH_ATTR gizCheckReport(dataPoint_t *cur, dataPoint_t *la
 		ret = 1;
 	}
 
+	if (last->valueO2 != cur->valueO2)
+	{
+		if (gizGetTimerCount() - lastReportTime >= REPORT_TIME_MAX)
+		{
+			GIZWITS_LOG("valueO2 Changed\n");
+			lastReportTime = gizGetTimerCount();
+			ret = 1;
+		}
+	}
 
 	return ret;
 }
@@ -221,6 +231,7 @@ static int8_t ICACHE_FLASH_ATTR gizDataPoints2ReportData(dataPoint_t *dataPoints
 
 	devStatusPtr->valueledValue = gizY2X(ledValue_RATIO, ledValue_ADDITION, dataPoints->valueledValue);
 
+	devStatusPtr->valueO2 = exchangeBytes(gizY2X(O2_RATIO, O2_ADDITION, dataPoints->valueO2));
 
 
 

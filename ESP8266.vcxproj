@@ -83,7 +83,6 @@
     <ClCompile Include="Src\gpio.c" />
     <ClCompile Include="Src\hal_key.c" />
     <ClCompile Include="Src\main.c" />
-    <ClCompile Include="Src\myPrintf.c" />
     <ClCompile Include="Src\stm32f1xx_hal_msp.c" />
     <ClCompile Include="Src\stm32f1xx_it.c" />
     <ClCompile Include="Src\system_stm32f1xx.c" />
@@ -142,7 +141,6 @@
     <ClInclude Include="Inc\gpio.h" />
     <ClInclude Include="Inc\hal_key.h" />
     <ClInclude Include="Inc\main.h" />
-    <ClInclude Include="Inc\myPrintf.h" />
     <ClInclude Include="Inc\stm32f1xx_hal_conf.h" />
     <ClInclude Include="Inc\stm32f1xx_it.h" />
     <ClInclude Include="Inc\tim.h" />

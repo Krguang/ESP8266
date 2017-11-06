@@ -16,8 +16,12 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "myPrintf.h"
 #include "gizwits_product.h"
+#include "usart.h"
+
+#define MODULE_TYPE 1
+#define GIZWITS_LOG printf
+
 
 #ifndef GPIO_KEY_NUM
 #define GPIO_KEY_NUM 2  
@@ -65,7 +69,7 @@ int8_t gizwitsEventProcess(eventInfo_t *info, uint8_t *gizdata, uint32_t len)
 		{
 		case EVENT_led3:
 			currentDataPoint.valueled3 = dataPointPtr->valueled3;
-			Uart_printf("Evt: EVENT_led3 %d \n", currentDataPoint.valueled3);
+			GIZWITS_LOG("Evt: EVENT_led3 %d \n", currentDataPoint.valueled3);
 			if (0x01 == currentDataPoint.valueled3)
 			{
 				//user handle
@@ -79,7 +83,7 @@ int8_t gizwitsEventProcess(eventInfo_t *info, uint8_t *gizdata, uint32_t len)
 			break;
 		case EVENT_led4:
 			currentDataPoint.valueled4 = dataPointPtr->valueled4;
-			Uart_printf("Evt: EVENT_led4 %d \n", currentDataPoint.valueled4);
+			GIZWITS_LOG("Evt: EVENT_led4 %d \n", currentDataPoint.valueled4);
 			if (0x01 == currentDataPoint.valueled4)
 			{
 				//user handle
@@ -95,7 +99,7 @@ int8_t gizwitsEventProcess(eventInfo_t *info, uint8_t *gizdata, uint32_t len)
 
 		case EVENT_ledValue:
 			currentDataPoint.valueledValue = dataPointPtr->valueledValue;
-			Uart_printf("Evt:EVENT_ledValue %d\n", currentDataPoint.valueledValue);
+			GIZWITS_LOG("Evt:EVENT_ledValue %d\n", currentDataPoint.valueledValue);
 			//user handle
 			break;
 
@@ -118,24 +122,24 @@ int8_t gizwitsEventProcess(eventInfo_t *info, uint8_t *gizdata, uint32_t len)
 		case WIFI_DISCON_M2M:
 			break;
 		case WIFI_RSSI:
-			Uart_printf("RSSI %d\n", wifiData->rssi);
+			GIZWITS_LOG("RSSI %d\n", wifiData->rssi);
 			break;
 		case TRANSPARENT_DATA:
-			Uart_printf("TRANSPARENT_DATA \n");
+			GIZWITS_LOG("TRANSPARENT_DATA \n");
 			//user handle , Fetch data from [data] , size is [len]
 			break;
 		case WIFI_NTP:
-			Uart_printf("WIFI_NTP : [%d-%d-%d %02d:%02d:%02d][%d] \n", ptime->year, ptime->month, ptime->day, ptime->hour, ptime->minute, ptime->second, ptime->ntp);
+			GIZWITS_LOG("WIFI_NTP : [%d-%d-%d %02d:%02d:%02d][%d] \n", ptime->year, ptime->month, ptime->day, ptime->hour, ptime->minute, ptime->second, ptime->ntp);
 			break;
 		case MODULE_INFO:
-			Uart_printf("MODULE INFO ...\n");
+			GIZWITS_LOG("MODULE INFO ...\n");
 #if MODULE_TYPE
 			GIZWITS_LOG("GPRS MODULE ...\n");
 			//Format By gprsInfo_t
 #else
-			Uart_printf("WIF MODULE ...\n");
+			GIZWITS_LOG("WIF MODULE ...\n");
 			//Format By moduleInfo_t
-			Uart_printf("moduleType : [%d] \n", ptModuleInfo->moduleType);
+			GIZWITS_LOG("moduleType : [%d] \n", ptModuleInfo->moduleType);
 #endif
 			break;
 		default:
@@ -161,6 +165,7 @@ void userHandle(void)
 
     */
 	//currentDataPoint.valuepower_sw = GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_3);
+	currentDataPoint.valueO2 = 189;
    
 }
 
@@ -288,26 +293,26 @@ int32_t uartWrite(uint8_t *buf, uint32_t len)
         return -1;
     }
 #ifdef PROTOCOL_DEBUG
-    Uart_printf("MCU2WiFi[%4d:%4d]: ", gizGetTimerCount(), len);
+    GIZWITS_LOG("MCU2WiFi[%4d:%4d]: ", gizGetTimerCount(), len);
 #endif
     
     for(i=0; i<len; i++)
     {
 HAL_UART_Transmit(&huart2, (uint8_t *)&buf[i], 1,HAL_MAX_DELAY); 
 #ifdef PROTOCOL_DEBUG
-        Uart_printf("%02x ", buf[i]);
+        GIZWITS_LOG("%02x ", buf[i]);
 #endif
         if(i >=2 && buf[i] == 0xFF)
         {
 HAL_UART_Transmit(&huart2, (uint8_t *)&aa, 1,HAL_MAX_DELAY); 
 #ifdef PROTOCOL_DEBUG
-        Uart_printf("%02x ", 0x55);
+        GIZWITS_LOG("%02x ", 0x55);
 #endif
         }
     }
     
 #ifdef PROTOCOL_DEBUG
-    Uart_printf("\n");
+    GIZWITS_LOG("\n");
 #endif
     
     return len;

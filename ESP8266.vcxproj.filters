@@ -75,9 +75,6 @@
     <ClCompile Include="Src\main.c">
       <Filter>Source files\Src</Filter>
     </ClCompile>
-    <ClCompile Include="Src\myPrintf.c">
-      <Filter>Source files\Src</Filter>
-    </ClCompile>
     <ClCompile Include="Src\stm32f1xx_hal_msp.c">
       <Filter>Source files\Src</Filter>
     </ClCompile>
@@ -250,9 +247,6 @@
       <Filter>Header files\Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\main.h">
-      <Filter>Header files\Inc</Filter>
-    </ClInclude>
-    <ClInclude Include="Inc\myPrintf.h">
       <Filter>Header files\Inc</Filter>
     </ClInclude>
     <ClInclude Include="Inc\stm32f1xx_hal_conf.h">

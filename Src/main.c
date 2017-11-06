@@ -43,7 +43,6 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-#include "myPrintf.h"
 #include "hal_key.h"
 #include "gizwits_protocol.h"
 #include "gizwits_product.h"
@@ -53,6 +52,8 @@
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+#define GIZWITS_LOG printf
+
 
 /** 用户区当前设备状态结构体*/
 dataPoint_t currentDataPoint;
@@ -84,7 +85,7 @@ void SystemClock_Config(void);
 */
 void key1ShortPress(void)
 {
-	Uart_printf("KEY1 PRESS ,Production Mode\n");
+	GIZWITS_LOG("KEY1 PRESS ,Production Mode\n");
 	gizwitsSetMode(WIFI_PRODUCTION_TEST);
 }
 
@@ -95,7 +96,7 @@ void key1ShortPress(void)
 */
 void key1LongPress(void)
 {
-	Uart_printf("KEY1 PRESS LONG ,Wifi Reset\n");
+	GIZWITS_LOG("KEY1 PRESS LONG ,Wifi Reset\n");
 	gizwitsSetMode(WIFI_RESET_MODE);
 }
 
@@ -106,7 +107,7 @@ void key1LongPress(void)
 */
 void key2ShortPress(void)
 {
-	Uart_printf("KEY2 PRESS ,Soft AP mode\n");
+	GIZWITS_LOG("KEY2 PRESS ,Soft AP mode\n");
 	gizwitsSetMode(WIFI_SOFTAP_MODE);
 }
 
@@ -118,7 +119,7 @@ void key2ShortPress(void)
 void key2LongPress(void)
 {
 	//AirLink mode
-	Uart_printf("KEY2 PRESS LONG ,AirLink mode\n");
+	GIZWITS_LOG("KEY2 PRESS LONG ,AirLink mode\n");
 	gizwitsSetMode(WIFI_AIRLINK_MODE);
 	HAL_GPIO_WritePin(GPIOC, GPIO_PIN_3, GPIO_PIN_RESET);
 }
@@ -175,7 +176,7 @@ int main(void)
 	timerInit();//定时器初始化
 	gizwitsInit();
 
-	Uart_printf("MCU Init Success \n");
+	GIZWITS_LOG("MCU Init Success \n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -185,6 +186,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+		userHandle();
 		gizwitsHandle((dataPoint_t *)&currentDataPoint);
 	}
   /* USER CODE END 3 */
